@@ -177,3 +177,132 @@ console.log(multiMap(
 ));
 // should log: { catfood: ['CATFOOD', 'Catfood', 'catfoodcatfood'], glue: ['GLUE', 'Glue', 'glueglue'], beer: ['BEER', 'Beer', 'beerbeer'] }
 
+
+// Type JavaScript here and click "Run Code" or press Ctrl + s
+console.log('Hello, world!');
+
+
+function createFunction() {
+	return () => {
+    console.log('hello')
+  }
+}
+
+// UNCOMMENT THESE TO TEST YOUR WORK!
+var function1 = createFunction();
+function1();
+
+
+
+function createFunctionPrinter(input) {
+	return () => {
+    console.log(input)
+  }
+}
+
+// UNCOMMENT THESE TO TEST YOUR WORK!
+var printSample = createFunctionPrinter('sample');
+printSample();
+var printHello = createFunctionPrinter('hello');
+printHello();
+
+
+
+function outer() {
+  var counter = 0; // this variable is outside incrementCounter's scope
+  function incrementCounter () {
+    counter ++ ;
+    console.log('counter', counter);
+  }
+  return incrementCounter;
+}
+
+var willCounter = outer();
+var jasCounter = outer();
+
+// Uncomment each of these lines one by one.
+// Before your do, guess what will be logged from each function call.
+
+willCounter();
+willCounter();
+willCounter();
+
+jasCounter();
+willCounter();
+
+
+
+function addByX(x) {
+	return (num) => {
+    return num + x
+  }
+}
+
+var addByTwo = addByX(2);
+console.log(addByTwo(1)); //should return 3
+console.log(addByTwo(2)); //should return 4
+console.log(addByTwo(3)); //should return 5
+
+var addByThree = addByX(3);
+console.log(addByThree(1)); //should return 4
+console.log(addByThree(2)); //should return 5
+
+var addByFour = addByX(4);
+console.log(addByFour(4)); //should return 8
+console.log(addByFour(10)); //should return 14
+
+
+
+//--------------------------------------------------
+// Extension
+//--------------------------------------------------
+
+function once(func) {
+  let count = 0;
+  let result;
+	return (num) => {
+    count ++;
+    if (count > 1) {
+      return result;
+    }
+    result = func(num);
+    return result;
+  }
+}
+
+var onceFunc = once(addByTwo);
+
+// UNCOMMENT THESE TO TEST YOUR WORK!
+console.log(onceFunc(4));  //should log 6
+console.log(onceFunc(10));  //should log 6
+console.log(onceFunc(9001));  //should log 6
+
+
+function after(count, func) {
+	let innerCounter = 0;
+  return () => {
+    innerCounter ++;
+    if (count === innerCounter) {
+      func();
+    }
+  }
+}
+
+var called = function() { console.log('hello') };
+var afterCalled = after(3, called);
+
+afterCalled(); // -> nothing is printed
+afterCalled(); // -> nothing is printed
+afterCalled(); // -> 'hello' is printed
+
+
+function delay(func, wait) {
+	return () => {
+    setTimeout(() => {
+      func()
+    }, wait)
+  }
+}
+
+const delayConsole = delay(() => {console.log('waited')}, 5000)
+delayConsole()
